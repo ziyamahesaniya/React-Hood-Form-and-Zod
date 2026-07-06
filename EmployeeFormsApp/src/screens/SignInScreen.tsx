@@ -1,11 +1,23 @@
-// src/validation/signInSchema.ts
+// src/screens/SignInScreen.tsx
 
-import { z } from 'zod';
-import { emailSchema, passwordMinLengthSchema } from './sharedSchemas';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { typography } from '../theme/typography';
+import { colors } from '../theme/colors';
 
-export const signInSchema = z.object({
-  email: emailSchema,
-  password: passwordMinLengthSchema,
+export default function SignInScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={typography.body}>Sign in form — built in Phase 7.</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
-
-export type SignInFormData = z.infer<typeof signInSchema>;
