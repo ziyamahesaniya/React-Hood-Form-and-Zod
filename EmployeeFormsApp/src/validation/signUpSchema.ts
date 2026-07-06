@@ -1,23 +1,26 @@
-// src/screens/SignUpScreen.tsx
+// src/validation/signUpSchema.ts
 
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { typography } from '../theme/typography';
-import { colors } from '../theme/colors';
+import { z } from 'zod';
+import { emailSchema, nameSchema, passwordMinLengthSchema } from './sharedSchemas';
 
-export default function SignUpScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={typography.body}>Sign up form — built in Phase 8.</Text>
-    </View>
-  );
-}
+// Extends the shared minimum-length rule with strength requirements
+// specific to account creation — Sign In intentionally does not
+// require these, since it's just checking an existing password.
+const strongPasswordSchema = passwordMinLengthSchema
+  .regex(/[A-Z]/, 'Must include at least one uppercase letter')
+  .regex(/[a-z]/, 'Must include at least one lowercase letter')
+  .regex(/[0-9]/, 'Must include at least one number');
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export const signUpSchema = z
+  .object({
+    fullName: nameSchema,
+    email: emailSchema,
+    password: strongPasswordSchema,
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+export type SignUpFormData = z.infer<typeof signUpSchema>;
