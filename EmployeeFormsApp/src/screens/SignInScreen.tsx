@@ -18,6 +18,7 @@ export default function SignInScreen() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isValid },
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
@@ -37,6 +38,7 @@ export default function SignInScreen() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
     Alert.alert('Signed In', `Welcome back, ${data.email}.`);
+    reset();
   };
 
   return (
