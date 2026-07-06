@@ -3,12 +3,28 @@
 import { z } from 'zod';
 
 // Matches formats like: (416) 123-4567, 416-123-4567, 4161234567
+// Regex generated using Gen AI
+// Explanation (for my reference):
+// ^(\+?1[-.\s]?)?      - Optional country code (+1) with optional separator
+// \(?\d{3}\)?          - Area code (3 digits) with optional parentheses
+// [-.\s]?              - Optional separator (dash, dot, or space)  
+// \d{3}[-.\s]?          - Next 3 digits with optional separator
+// \d{4}$               - Last 4 digits at the end of the string
 const canadianPhoneRegex = /^(\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
 
 // Canadian postal codes follow the pattern A1A 1A1.
 // The first letter excludes D, F, I, O, Q, U (not used by Canada Post),
 // and the second character (a digit) has no restriction, but we also
 // exclude W and Z as the second letter per Canada Post's actual rules.
+// Regex generated using Gen AI
+// Explanation (for my reference):
+// ^[ABCEGHJ-NPRSTVXY]  - First letter (excludes D, F, I, O, Q, U)
+// \d                    - Second character (any digit)
+// [ABCEGHJ-NPRSTV-Z]   - Third character (excludes W, Z)
+//  ?                    - Optional space
+// \d                    - Fourth character (any digit)
+// [ABCEGHJ-NPRSTV-Z]   - Fifth character (excludes W, Z)
+// \d$                   - Sixth character (any digit) at the end of the string
 const canadianPostalCodeRegex =
   /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z] ?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
 
