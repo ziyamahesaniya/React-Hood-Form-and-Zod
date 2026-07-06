@@ -1,7 +1,7 @@
 // src/screens/SignUpScreen.tsx
 
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ScreenContainer from '../components/ScreenContainer';
@@ -34,14 +34,9 @@ export default function SignUpScreen() {
 
   const onSubmit = async (data: SignUpFormData) => {
     setIsSubmitting(true);
-    // Simulates an account-creation request. `confirmPassword` only
-    // exists to validate against `password` on-device — it's dropped
-    // here before "sending" data, since a real backend would never
-    // need it once the match has already been confirmed client-side.
     const { confirmPassword, ...accountData } = data;
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    Alert.alert('Account Created', `Welcome, ${accountData.fullName}.`);
     reset();
   };
 
@@ -55,6 +50,8 @@ export default function SignUpScreen() {
         label="Full Name"
         placeholder="Jane Doe"
         autoCapitalize="words"
+        autoComplete="name"
+        textContentType="name"
       />
       <FormInput
         control={control}
@@ -63,6 +60,8 @@ export default function SignUpScreen() {
         placeholder="you@example.com"
         autoCapitalize="none"
         keyboardType="email-address"
+        autoComplete="email"
+        textContentType="emailAddress"
       />
       <PasswordInput
         control={control}

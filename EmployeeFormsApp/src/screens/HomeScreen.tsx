@@ -4,6 +4,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
 import { RootStackParamList } from '../navigation/types';
 import { colors } from '../theme/colors';
 import { spacing, radius } from '../theme/spacing';
@@ -11,10 +12,14 @@ import { typography } from '../theme/typography';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const menuItems: { label: string; screen: keyof RootStackParamList }[] = [
-  { label: 'Employee Information Form', screen: 'EmployeeForm' },
-  { label: 'Sign In', screen: 'SignIn' },
-  { label: 'Sign Up', screen: 'SignUp' },
+const menuItems: {
+  label: string;
+  screen: keyof RootStackParamList;
+  icon: keyof typeof Ionicons.glyphMap;
+}[] = [
+  { label: 'Employee Information Form', screen: 'EmployeeForm', icon: 'person-outline' },
+  { label: 'Sign In', screen: 'SignIn', icon: 'log-in-outline' },
+  { label: 'Sign Up', screen: 'SignUp', icon: 'person-add-outline' },
 ];
 
 export default function HomeScreen({ navigation }: Props) {
@@ -37,6 +42,7 @@ export default function HomeScreen({ navigation }: Props) {
               pressed && styles.buttonPressed,
             ]}
           >
+            <Ionicons name={item.icon} size={20} color={colors.white} />
             <Text style={styles.buttonText}>{item.label}</Text>
           </Pressable>
         ))}
@@ -61,18 +67,21 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.primary,
     borderRadius: radius.md,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.lg,
     marginBottom: spacing.md,
+    gap: spacing.sm,
   },
   buttonPressed: {
     backgroundColor: colors.primaryPressed,
   },
   buttonText: {
     color: colors.white,
-    textAlign: 'center',
     ...typography.button,
   },
 });

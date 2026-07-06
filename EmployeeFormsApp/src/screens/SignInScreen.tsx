@@ -1,7 +1,7 @@
 // src/screens/SignInScreen.tsx
 
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ScreenContainer from '../components/ScreenContainer';
@@ -32,12 +32,8 @@ export default function SignInScreen() {
 
   const onSubmit = async (data: SignInFormData) => {
     setIsSubmitting(true);
-    // Simulates an authentication request. A real app would call an
-    // auth API here; this assignment only requires demonstrating the
-    // validation + loading-state flow, not a working backend.
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    Alert.alert('Signed In', `Welcome back, ${data.email}.`);
     reset();
   };
 
@@ -52,6 +48,8 @@ export default function SignInScreen() {
         placeholder="you@example.com"
         autoCapitalize="none"
         keyboardType="email-address"
+        autoComplete="email"
+        textContentType="emailAddress"
       />
       <PasswordInput
         control={control}

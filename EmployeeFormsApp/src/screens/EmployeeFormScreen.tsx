@@ -1,7 +1,7 @@
 // src/screens/EmployeeFormScreen.tsx
 
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ScreenContainer from '../components/ScreenContainer';
@@ -36,12 +36,8 @@ export default function EmployeeFormScreen() {
 
   const onSubmit = async (data: EmployeeFormData) => {
     setIsSubmitting(true);
-    // Simulates a network call. In a real app this would POST `data`
-    // to an API; for this assignment, a short delay demonstrates the
-    // loading state and gives visible submit feedback.
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsSubmitting(false);
-    Alert.alert('Success', `Employee record created for ${data.fullName}.`);
     reset();
   };
 
@@ -57,6 +53,8 @@ export default function EmployeeFormScreen() {
         label="Full Name"
         placeholder="Jane Doe"
         autoCapitalize="words"
+        autoComplete="name"
+        textContentType="name"
       />
       <FormInput
         control={control}
@@ -65,6 +63,8 @@ export default function EmployeeFormScreen() {
         placeholder="jane.doe@company.com"
         autoCapitalize="none"
         keyboardType="email-address"
+        autoComplete="email"
+        textContentType="emailAddress"
       />
       <FormInput
         control={control}
@@ -72,6 +72,8 @@ export default function EmployeeFormScreen() {
         label="Phone Number"
         placeholder="(416) 123-4567"
         keyboardType="phone-pad"
+        autoComplete="tel"
+        textContentType="telephoneNumber"
       />
       <FormInput
         control={control}
@@ -86,6 +88,8 @@ export default function EmployeeFormScreen() {
         label="Postal Code"
         placeholder="A1A 1A1"
         autoCapitalize="characters"
+        autoComplete="postal-code"
+        textContentType="postalCode"
       />
       <FormInput
         control={control}
@@ -100,6 +104,7 @@ export default function EmployeeFormScreen() {
         label="Job Title"
         placeholder="Software Developer"
         autoCapitalize="words"
+        textContentType="jobTitle"
       />
 
       <SubmitButton
