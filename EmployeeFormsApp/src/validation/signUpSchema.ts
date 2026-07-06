@@ -6,6 +6,7 @@ import { emailSchema, nameSchema, passwordMinLengthSchema } from './sharedSchema
 // Extends the shared minimum-length rule with strength requirements
 // specific to account creation — Sign In intentionally does not
 // require these, since it's just checking an existing password.
+// Regex generated using https://regexr.com/3e48o
 const strongPasswordSchema = passwordMinLengthSchema
   .regex(/[A-Z]/, 'Must include at least one uppercase letter')
   .regex(/[a-z]/, 'Must include at least one lowercase letter')
